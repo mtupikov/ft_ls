@@ -12,6 +12,7 @@ SRC =   main.c \
         buffer_management.c \
         sorting_management.c \
         sort_cmp_functions.c \
+        printing_management.c \
 
 OBJ_DIR = obj
 

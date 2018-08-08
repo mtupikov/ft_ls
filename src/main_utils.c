@@ -13,7 +13,7 @@ void	init_default_options()
 	g_options.a = 0;
 	g_options.big_r = 0;
 	g_options.l = 0;
-	g_options.small_r = 0;
+	g_options.small_r = 1;
 	g_options.t = 0;
 	g_options.f = 0;
 	g_options.u = 0;

@@ -20,21 +20,17 @@ void	do_sort(struct stat **buf, char **path_names,
 		int (*cmp_l)(char *, char *))
 {
 	int i;
+	int j;
 
-	i = 0;
-	while (buf[++i])
-		if ((cmp_l != NULL && cmp_l(path_names[i - 1], path_names[i]) > 0) ||
-			(cmp_b != NULL && cmp_b(buf[i - 1], buf[i]) > 0))
-			swap(buf, path_names, i - 1, i);
-}
-
-void	reverse(struct stat **buf, char **path_names)
-{
-	int i;
-
-	i = -1;
-	while (++i < g_options.size / 2)
-		swap(buf, path_names, i, g_options.size - i);
+	j = 0;
+	while (++j < g_options.size)
+	{
+		i = 0;
+		while (buf[++i])
+			if ((cmp_l != NULL && cmp_l(path_names[i - 1], path_names[i]) > 0) ||
+				(cmp_b != NULL && cmp_b(buf[i - 1], buf[i]) > 0))
+				swap(buf, path_names, i - 1, i);
+	}
 }
 
 void	sort(struct stat **buf, char **path_names)
@@ -46,7 +42,5 @@ void	sort(struct stat **buf, char **path_names)
 		do_sort(buf, path_names, compare_t, NULL);
 	if (g_options.u == 1)
 		do_sort(buf, path_names, compare_u, NULL);
-	if (g_options.small_r == 1)
-		reverse(buf, path_names);
 }
 

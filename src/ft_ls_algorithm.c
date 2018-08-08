@@ -54,7 +54,8 @@ void	ft_ls_algorithm(char *path)
 
 	if (check_if_file(path))
 		return;
-	ft_printf("%s:\n", path);
+	if (g_options.big_r)
+		ft_printf("%s:\n", path);
 	dir = opendir(path);
 	if (dir == NULL)
 		error(path);

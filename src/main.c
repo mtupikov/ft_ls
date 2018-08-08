@@ -25,7 +25,7 @@ int 	check_ls_flags(char *str)
 		if (str[i] == 'a')
 			g_options.a = 1;
 		else if (str[i] == 'r')
-			g_options.small_r = 1;
+			g_options.small_r = -1;
 		else if (str[i] == 'R')
 			g_options.big_r = 1;
 		else if (str[i] == 't')

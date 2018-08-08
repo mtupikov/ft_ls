@@ -2,7 +2,7 @@
 
 int 	compare_lex(char *a, char *b)
 {
-	return (ft_strcmp(a, b));
+	return (g_options.small_r * ft_strcmp(a, b));
 }
 
 int 	compare_t(struct stat *a, struct stat *b)
