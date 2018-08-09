@@ -1,15 +1,36 @@
 #include "../inc/ft_ls_header.h"
 
-void	print_usage()
+void	sort_args(int argc, char **argv)
 {
-	ft_printf("Usage: ./ft_ls [-artlR] [file ...]\n");
-	exit(0);
+	int		i;
+	int		j;
+	char	*c_tmp;
+
+	i = -1;
+	while (argv[++i])
+		argv[i] = ft_strjoin(argv[i], "");
+	j = 0;
+	while (++j < argc)
+	{
+		i = 0;
+		while (argv[++i])
+		{
+			if (g_options.small_r * ft_strcmp(argv[i - 1], argv[i]) > 0)
+			{
+				c_tmp = ft_strjoin(argv[i - 1], "");
+				ft_strdel(&argv[i - 1]);
+				argv[i - 1] = ft_strjoin(argv[i], "");
+				ft_strdel(&argv[i]);
+				argv[i] = c_tmp;
+			}
+		}
+	}
 }
 
-void	error(const char *error)
+void	print_usage()
 {
-	perror(error);
-	exit(2);
+	ft_printf("Usage: ./ft_ls [-lrRafut] [file ...]\n");
+	exit(0);
 }
 
 int 	check_ls_flags(char *str)
@@ -45,19 +66,24 @@ void	handle_arguments(int argc, char **argv)
 {
 	int i;
 
-	i = 0;
-	if (argc > 1 && check_ls_flags(argv[1]))
-		i++;
-	if (argc - i == 1)
+	i = 1;
+	while (1)
+		if (argc > 1 && argv[i] && check_ls_flags(argv[i]))
+			i++;
+		else
+			break;
+	if (argc - i == 0)
 	{
 		ft_ls_algorithm("./");
 		return;
 	}
-	check_args_errors(&argv[i + 1]);
+	sort_args(argc, &argv[i]);
+	check_args_errors(&argv[i]);
+	i--;
 	while (argv[++i])
 	{
 		ft_ls_algorithm(argv[i]);
-		if (argv[i + 1] != NULL)
+		if (argv[i + 1] != NULL && argv[i] != (char *)0x1)
 			ft_printf("\n");
 	}
 }

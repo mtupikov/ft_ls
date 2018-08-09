@@ -22,6 +22,9 @@ typedef struct		s_sizes
 	int 			owner;
 	int 			group;
 	int 			size_size;
+	int 			minor_size;
+	int 			major_size;
+	int				total;
 }					t_sizes;
 
 typedef struct		s_options
@@ -34,6 +37,7 @@ typedef struct		s_options
 	int 			u;
 	int 			t;
 	int 			size;
+	int 			argc;
 	t_sizes			sizes;
 }					t_options;
 
@@ -44,18 +48,14 @@ typedef struct		s_options
 t_options			g_options;
 
 /*
-**	main.c
-*/
-
-void				error(const char *error);
-
-/*
 **	main_utils.c
 */
 
 void				init_default_options();
 void				check_args_errors(char **args);
 int 				num_len(int num);
+void				init_default_sizes();
+void				print_access_util(mode_t mode);
 
 /*
 **	ft_ls_algorithm.c
@@ -69,7 +69,7 @@ void				ft_ls_algorithm(char *path);
 
 int 				count_elements_in_dir(DIR *dir);
 void				allocate_buffer(struct stat	**buf, char **path_names, char *path);
-void				print_buffer(struct stat **buf, char **path_names);
+void				print_buffer(struct stat **buf, char **path_names, char *path);
 char				*add_valid_path(char *path, char *add);
 
 /*
@@ -77,7 +77,7 @@ char				*add_valid_path(char *path, char *add);
 */
 
 int 				check_if_file(char *path);
-void 				long_output(struct stat buf, char *filename);
+void 				long_output(struct stat buf, char *filename, char *path);
 
 /*
 **	printing_management.c
@@ -87,6 +87,7 @@ void				print_access(mode_t mode);
 void				print_date(time_t date);
 void				print_integer(int num, int out);
 void				print_string(char *s, int out);
+void				print_majmin(struct stat buf);
 
 /*
 **	sorting_management.c

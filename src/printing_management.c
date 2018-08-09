@@ -2,12 +2,11 @@
 
 void	print_access(mode_t mode)
 {
+	print_access_util(mode);
 	ft_putchar((S_ISFIFO(mode)) ? 'p' : '\0');
 	ft_putchar((S_ISCHR(mode)) ? 'c' : '\0');
-	ft_putchar((S_ISDIR(mode)) ? 'd' : '\0');
 	ft_putchar((S_ISBLK(mode)) ? 'b' : '\0');
 	ft_putchar((S_ISREG(mode)) ? '-' : '\0');
-	ft_putchar((S_ISLNK(mode)) ? 'l' : '\0');
 	ft_putchar((S_ISSOCK(mode)) ? 's' : '\0');
 	ft_putchar((mode & S_IRUSR) ? 'r' : '-');
 	ft_putchar((mode & S_IWUSR) ? 'w' : '-');
@@ -17,10 +16,14 @@ void	print_access(mode_t mode)
 	ft_putchar((mode & S_IXGRP) ? 'x' : '-');
 	ft_putchar((mode & S_IROTH) ? 'r' : '-');
 	ft_putchar((mode & S_IWOTH) ? 'w' : '-');
-	if (mode & S_IXOTH)
+	if (mode & S_ISVTX && S_ISDIR(mode))
+		ft_putchar('t');
+	else if (mode & S_ISVTX)
+		ft_putchar('T');
+	else if (mode & S_IXOTH)
 		ft_putchar('x');
 	else
-		ft_putchar((mode & S_ISVTX) ? 'T' : '-');
+		ft_putchar('-');
 	ft_putstr("  ");
 }
 
@@ -63,3 +66,24 @@ void	print_string(char *s, int out)
 	ft_putchar(' ');
 }
 
+void	print_majmin(struct stat buf)
+{
+	int		i;
+	int		min;
+	int		maj;
+
+	min = num_len(minor(buf.st_rdev));
+	maj = num_len(major(buf.st_rdev));
+	i = 0;
+	if (num_len(maj) != g_options.sizes.major_size)
+		while (i++ < g_options.sizes.major_size - maj)
+			ft_putchar(' ');
+	ft_putnbr(major(buf.st_rdev));
+	ft_putchar(',');
+	i = 0;
+	if (num_len(min) != g_options.sizes.minor_size)
+		while (i++ < g_options.sizes.minor_size - min)
+			ft_putchar(' ');
+	ft_putnbr(minor(buf.st_rdev));
+	ft_putchar(' ');
+}

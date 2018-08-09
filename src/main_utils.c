@@ -1,11 +1,25 @@
 #include "../inc/ft_ls_header.h"
 
+void	print_access_util(mode_t mode)
+{
+	if ((S_ISDIR(mode)) || (S_ISLNK(mode)))
+	{
+		if ((S_ISLNK(mode)))
+			ft_putchar('l');
+		else
+			ft_putchar('d');
+	}
+}
+
 void	init_default_sizes()
 {
 	g_options.sizes.link_size = 0;
 	g_options.sizes.owner = 0;
 	g_options.sizes.group = 0;
 	g_options.sizes.size_size = 0;
+	g_options.sizes.minor_size = 0;
+	g_options.sizes.major_size = 0;
+	g_options.sizes.total = 0;
 }
 
 void	init_default_options()
@@ -17,6 +31,7 @@ void	init_default_options()
 	g_options.t = 0;
 	g_options.f = 0;
 	g_options.u = 0;
+	g_options.argc = 0;
 	init_default_sizes();
 }
 
@@ -47,5 +62,7 @@ void	check_args_errors(char **args)
 			perror(args[i]);
 			args[i] = (char *)0x1;
 		}
+		else
+			g_options.argc++;
 }
 
