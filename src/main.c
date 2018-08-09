@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtupikov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/09 16:59:23 by mtupikov          #+#    #+#             */
+/*   Updated: 2018/08/09 16:59:27 by mtupikov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/ft_ls_header.h"
 
 void	sort_args(int argc, char **argv)
@@ -27,13 +39,13 @@ void	sort_args(int argc, char **argv)
 	}
 }
 
-void	print_usage()
+void	print_usage(void)
 {
 	ft_printf("Usage: ./ft_ls [-lrRafut] [file ...]\n");
 	exit(0);
 }
 
-int 	check_ls_flags(char *str)
+int		check_ls_flags(char *str)
 {
 	int i;
 
@@ -54,7 +66,7 @@ int 	check_ls_flags(char *str)
 		else if (str[i] == 'l')
 			g_options.l = 1;
 		else if (str[i] == 'f')
-			((g_options.f = 1) && (g_options.a = 1));
+			g_options.f = 1;
 		else if (str[i] == 'u')
 			g_options.u = 1;
 		else
@@ -71,12 +83,14 @@ void	handle_arguments(int argc, char **argv)
 		if (argc > 1 && argv[i] && check_ls_flags(argv[i]))
 			i++;
 		else
-			break;
+			break ;
 	if (argc - i == 0)
 	{
 		ft_ls_algorithm("./");
-		return;
+		return ;
 	}
+	if (g_options.f)
+		g_options.a = 1;
 	sort_args(argc, &argv[i]);
 	check_args_errors(&argv[i]);
 	i--;
@@ -88,7 +102,7 @@ void	handle_arguments(int argc, char **argv)
 	}
 }
 
-int main(int argc, char **argv)
+int		main(int argc, char **argv)
 {
 	init_default_options();
 	handle_arguments(argc, argv);

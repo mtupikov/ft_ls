@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   buffer_management.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtupikov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/09 16:58:31 by mtupikov          #+#    #+#             */
+/*   Updated: 2018/08/09 16:58:32 by mtupikov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/ft_ls_header.h"
 
 char	*add_valid_path(char *path, char *add)
@@ -16,7 +28,7 @@ char	*add_valid_path(char *path, char *add)
 	return (ret);
 }
 
-int 	count_elements_in_dir(DIR *dir)
+int		count_elements_in_dir(DIR *dir)
 {
 	int	ret;
 
@@ -27,7 +39,7 @@ int 	count_elements_in_dir(DIR *dir)
 	return (ret);
 }
 
-void 	check_sizes(struct stat	buf)
+void	check_sizes(struct stat	buf)
 {
 	if (num_len(buf.st_nlink) > g_options.sizes.link_size)
 		g_options.sizes.link_size = num_len(buf.st_nlink);
@@ -50,7 +62,7 @@ void	allocate_buffer(struct stat	**buf, char **path_names, char *path)
 {
 	DIR				*dir;
 	struct dirent	*sd;
-	int 			i;
+	int				i;
 	char			*new_p;
 
 	i = 0;
@@ -59,11 +71,8 @@ void	allocate_buffer(struct stat	**buf, char **path_names, char *path)
 	{
 		buf[i] = malloc(sizeof(struct stat));
 		new_p = add_valid_path(path, sd->d_name);
-
 		stat(new_p, buf[i]);
-
 		check_sizes(*buf[i]);
-
 		ft_strdel(&new_p);
 		path_names[i] = ft_strjoin(sd->d_name, "");
 		i++;
@@ -71,7 +80,6 @@ void	allocate_buffer(struct stat	**buf, char **path_names, char *path)
 	buf[i] = NULL;
 	path_names[i] = NULL;
 	closedir(dir);
-
 }
 
 void	print_buffer(struct stat **buf, char **path_names, char *path)
@@ -96,5 +104,3 @@ void	print_buffer(struct stat **buf, char **path_names, char *path)
 		}
 	g_options.sizes.total = 0;
 }
-
-

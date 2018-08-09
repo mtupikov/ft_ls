@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   printing_management.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtupikov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/09 16:59:32 by mtupikov          #+#    #+#             */
+/*   Updated: 2018/08/09 16:59:33 by mtupikov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/ft_ls_header.h"
 
 void	print_access(mode_t mode)
@@ -29,7 +41,7 @@ void	print_access(mode_t mode)
 
 void	print_date(time_t date)
 {
-	char 	*str_date;
+	char	*str_date;
 
 	str_date = ctime(&date);
 	write(STDOUT_FILENO, str_date + 9, 1);

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   file_management.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtupikov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/09 16:59:11 by mtupikov          #+#    #+#             */
+/*   Updated: 2018/08/09 16:59:12 by mtupikov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/ft_ls_header.h"
 
 void	print_owner(struct stat buf)
@@ -30,7 +42,7 @@ void	print_group(struct stat buf)
 	ft_putchar(' ');
 }
 
-void 	long_output(struct stat buf, char *filename, char *path)
+void	long_output(struct stat buf, char *filename, char *path)
 {
 	char c_buf[1024];
 	char *tmp;
@@ -44,11 +56,12 @@ void 	long_output(struct stat buf, char *filename, char *path)
 	else
 		print_integer((int)buf.st_size, g_options.sizes.size_size);
 	ft_putchar(' ');
-	g_options.u == 1 ?	print_date(buf.st_atimespec.tv_sec) :
+	g_options.u == 1 ? print_date(buf.st_atimespec.tv_sec) :
 						print_date(buf.st_mtimespec.tv_sec);
 	ft_putstr(filename);
 	path == NULL ?
-	(tmp = ft_strjoin(filename, "")) : (tmp = add_valid_path(path, filename));
+	(tmp = ft_strjoin(filename, ""))
+	: (tmp = add_valid_path(path, filename));
 	if (readlink(tmp, c_buf, 1024) != -1)
 	{
 		ft_putstr(" -> ");
@@ -58,11 +71,11 @@ void 	long_output(struct stat buf, char *filename, char *path)
 	ft_putchar('\n');
 }
 
-int 	check_if_file(char *path)
+int		check_if_file(char *path)
 {
 	struct stat buf;
-	char 		c_buf[1024];
-	int 		is_link;
+	char		c_buf[1024];
+	int			is_link;
 
 	if (path == (char *)0x1)
 		return (1);

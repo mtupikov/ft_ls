@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mtupikov <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/08/09 16:58:48 by mtupikov          #+#    #+#             */
+/*   Updated: 2018/08/09 16:58:50 by mtupikov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../inc/ft_ls_header.h"
 
 void	print_access_util(mode_t mode)
@@ -11,7 +23,7 @@ void	print_access_util(mode_t mode)
 	}
 }
 
-void	init_default_sizes()
+void	init_default_sizes(void)
 {
 	g_options.sizes.link_size = 0;
 	g_options.sizes.owner = 0;
@@ -22,7 +34,7 @@ void	init_default_sizes()
 	g_options.sizes.total = 0;
 }
 
-void	init_default_options()
+void	init_default_options(void)
 {
 	g_options.a = 0;
 	g_options.big_r = 0;
@@ -35,7 +47,7 @@ void	init_default_options()
 	init_default_sizes();
 }
 
-int 	num_len(int num)
+int		num_len(int num)
 {
 	int ret;
 
@@ -56,7 +68,7 @@ void	check_args_errors(char **args)
 	struct stat	buf;
 
 	i = -1;
-	while(args[++i])
+	while (args[++i])
 		if (stat(args[i], &buf) != 0)
 		{
 			perror(args[i]);
@@ -65,4 +77,3 @@ void	check_args_errors(char **args)
 		else
 			g_options.argc++;
 }
-
